@@ -1,0 +1,783 @@
+:root {
+    --primary-dark: #1b1c4d;
+    --accent-yellow: #ffcb3d;
+    --active-blue: #242157;
+    --text-active: #fde68a;
+    --bg-body: #e5e7eb;
+    --font-main: 'Inter', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: var(--font-main);
+}
+
+body {
+    margin: 0;
+    background: var(--bg-body);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* HEADER */
+.header {
+    background: var(--primary-dark);
+    color: white;
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    gap: 12px;
+    font-size: 11px;
+}
+
+.header h1 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+/* NAVIGATION PILL */
+.nav-container {
+    background: #242c5a;
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+    padding: 0;
+    overflow: hidden;
+    height: 50px;
+    min-width: 280px;
+    box-shadow: 0 8px 2px -5px rgba(255, 255, 255, 0.3), inset 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--accent-yellow);
+    width: 60px;
+    height: 100%;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.nav-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-today {
+    background: var(--accent-yellow);
+    color: #1b1c4d;
+    border: none;
+    flex: 1;
+    height: 100%;
+    font-weight: 800;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background 0.2s;
+}
+
+.btn-today:hover {
+    background: #ffd561;
+}
+
+/* MAIN LAYOUT */
+.main {
+    display: grid;
+     grid-template-columns: 1.8fr 1.2fr;
+    gap: 15px;
+    padding: 15px 20px;
+    flex: 1;
+}
+
+.card {
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* AGENDA */
+.agenda-main {
+    padding: 36px;
+}
+
+/* ===== BATASI AGENDA HANYA 4 KEGIATAN ===== */
+.agenda-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    max-height: calc((80px * 4) + (16px * 3));
+    overflow-y: auto;
+    align-content: flex-start;
+    padding-right: 6px;
+}
+
+/* Lebar scrollbar */
+.agenda-wrapper::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Background scrollbar */
+.agenda-wrapper::-webkit-scrollbar-track {
+    background: white;      /* ORANGE MUDA */
+    border-radius: 8px;
+}
+
+/* Handle scrollbar */
+.agenda-wrapper::-webkit-scrollbar-thumb {
+    background: #ffcb3d;      /* ORANGE TUA */
+    border-radius: 8px;
+}
+
+/* Hover efek */
+.agenda-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #ffcb3d;
+}
+
+
+
+.agenda-card {
+    display: flex;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: calc(50% - 8px); /* 50% dikurangi setengah dari total gap (16px / 2) */
+    flex: 0 0 auto;         /* Biarkan lebar ditentukan oleh property width */
+    
+    overflow: hidden;
+    margin-bottom: 10px;    /* Jarak antar baris kartu */
+}
+
+
+.bar {
+    width: 8px; /* Sedikit lebih tebal agar tegas di ujung */
+    background-color: var(--accent-yellow);
+    /* Menghilangkan border-radius pada sisi kiri bar agar rata dengan card */
+    border-radius: 0; 
+    flex-shrink: 0;
+}
+
+.agenda-details {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 24px 20px 16px; /* Padding kiri (16px) memberi jarak teks dari bar */
+}
+
+/* ===== WARNA BAR UNTUK 8 DIVISI ===== */
+.agenda-card.divisi-1 .bar { background: #2196F3; }  /* Biru */
+.agenda-card.divisi-2 .bar { background: #4CAF50; }  /* Hijau */
+.agenda-card.divisi-3 .bar { background: #FF9800; }  /* Orange */
+.agenda-card.divisi-4 .bar { background: #F44336; }  /* Merah */
+.agenda-card.divisi-5 .bar { background: #9C27B0; }  /* Ungu */
+.agenda-card.divisi-6 .bar { background: #00BCD4; }  /* Cyan */
+.agenda-card.divisi-7 .bar { background: #FFEB3B; }  /* Kuning */
+.agenda-card.divisi-8 .bar { background: #E91E63; }  /* Pink */
+.agenda-card.divisi-default .bar { background: #9E9E9E; }  /* Pink */
+
+/* ===== WARNA BACKGROUND UNTUK 8 DIVISI ===== */
+.agenda-card.divisi-1 { background: #E3F2FD; }  /* Biru muda */
+.agenda-card.divisi-2 { background: #E8F5E9; }  /* Hijau muda */
+.agenda-card.divisi-3 { background: #FFF3E0; }  /* Orange muda */
+.agenda-card.divisi-4 { background: #FFEBEE; }  /* Merah muda */
+.agenda-card.divisi-5 { background: #F3E5F5; }  /* Ungu muda */
+.agenda-card.divisi-6 { background: #E0F7FA; }  /* Cyan muda */
+.agenda-card.divisi-7 { background: #FFFDE7; }  /* Kuning muda */
+.agenda-card.divisi-8 { background: #FCE4EC; }  /* Pink muda */
+.agenda-card.divisi-default { background: #F5F5F5; }  /* Pink muda */
+
+
+.agenda-details h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #000;
+}
+
+.agenda-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+    color: #555;
+    font-size: 14px;
+}
+
+.agenda-info i {
+    color: var(--accent-yellow);
+    width: 14px;
+}
+
+.empty-msg {
+    display: flex;
+    gap: 16px;
+}
+
+.msg-text {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.loading-msg {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 3px solid #e5e7eb;
+    border-top: 3px solid #1b1c4d;
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+.agenda-legend {
+    margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #374151;
+}
+
+.color-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.no-agenda-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 500px;
+    margin:  auto;
+    padding: 30px 20px;
+    background: white;
+    border-radius: 20px;
+    position: relative;
+}
+
+/* Wrapper ikon */
+.icon-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+}
+
+/* Lingkaran latar belakang */
+.circle-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Ikon kalender di depan */
+.calendar-icon {
+    position: absolute;
+    top: 28px; /* sesuaikan agar tengah */
+    left: 28px;
+    width: 64px;
+    height: 64px;
+}
+
+/* Judul */
+.no-agenda-card h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f2937; /* abu gelap */
+    margin-bottom: 12px;
+}
+
+/* Deskripsi */
+.no-agenda-card p {
+    font-size: 16px;
+    color: #4b5563; /* abu sedang */
+    line-height: 1.6;
+}
+
+/* Efek gradien kecil pada teks atau ikon (opsional) */
+.no-agenda-card .calendar-icon path {
+    stroke: url(#gradient); /* menggunakan gradient dari SVG */
+}
+
+
+/* KALENDER */
+.days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: var(--primary-dark);
+}
+
+.days-header div {
+    color: white;
+    padding: 14px 0;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, minmax(86px, 1fr));
+    flex: 1;
+}
+
+
+.cell {
+    border: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.date-box {
+    font-size: clamp(20px, 3.5vh, 32px);
+}
+
+.date-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+
+.cell.active .date-box {
+    background: var(--active-blue);
+    color: var(--text-active);
+    padding: 8px 14px;
+    border-radius: 12px;
+}
+
+.cell.muted .date-box {
+    color: #d1d5db;
+}
+
+/* FOOTER */
+.footer {
+    background: var(--primary-dark);
+    color: white;
+    margin: 0 30px 15px;
+    padding: 10px 24px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.marquee {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.marquee-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 100%;
+    animation: scrollText 12s linear infinite;
+}
+
+.info-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #992f34;
+    color: #fff;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.marquee-text {
+    font-weight: 500;
+    font-size: 23px;
+}
+
+.badge {
+    background: var(--accent-yellow);
+    color: #1a1a1a;
+    padding: 3px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.badge-wrapper {
+    position: absolute;
+    bottom: -5px;       /* ⬅️ atur seberapa nimpanya */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+}
+
+.cell.week-active .badge-wrapper {
+    bottom: 2px;   /* ⬅️ lebih turun karena date-box lebih besar */
+}
+
+.calendar-area {
+    display: flex;
+    flex-direction: column;
+     min-width: 520px;
+}
+
+
+
+
+
+
+@keyframes scrollText {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.info-icon {
+    background: var(--accent-yellow);
+    color: var(--primary-dark);
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+}
+
+.cell.week-active {
+    align-items: flex-start;
+    padding-top: 14px;
+     min-height: 80px;
+}
+
+.cell.week-active .date-box {
+    font-size: clamp(26px, 4.5vh, 40px);
+    padding: 10px 16px;
+    border-radius: 14px;
+}
+
+.calendar-right {
+    display: none;
+}
+
+.calendar-split {
+    flex: 1;
+    display: grid;
+}
+
+.calendar-left {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+
+
+
+@media (max-width: 1240px) {
+
+    body {
+        overflow: auto;
+        /* izinkan scroll */
+    }
+
+    .main {
+        grid-template-columns: 1fr;
+        /* jadi 1 kolom */
+        grid-template-areas:
+            "calendar"
+            "agenda";
+    }
+
+    /* Atur urutan */
+    .calendar-area {
+        grid-area: calendar;
+    }
+
+    .agenda-main {
+        grid-area: agenda;
+    }
+
+    /* Kalender jadi full width */
+    .calendar-area {
+        min-height: 520px;
+    }
+
+    /* Agenda menyesuaikan */
+    .agenda-main {
+        padding: 24px;
+    }
+
+    /* Kartu agenda jadi 1 kolom */
+    .agenda-card {
+        width: 100%;
+    }
+
+    /* Legend lebih rapi */
+
+    .nav-container {
+        min-width: 250px;
+    }
+
+    .header h1 {
+        font-size: 18px;
+    }
+
+    .text-logo {
+        font-size: 9px;
+    }
+}
+
+/* ====== RESPONSIVE KALENDER UNTUK 660 x 1066 ====== */
+/* ====== TABLET PORTRAIT (660–770 x 1066) ====== */
+@media (max-width: 770px) {
+
+     .main {
+      min-height: unset;
+      height: auto;
+      align-content: start;
+      gap: 12px;
+    }
+
+    .agenda-wrapper {
+          max-height: calc((150px * 4) + (16px * 3));
+    }
+
+    .calendar-area {
+        padding: 14px;
+        height: auto;
+        min-height: unset;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background: transparent;
+        /* ⬅️ jarak terkendali */
+    }
+
+    /* ================= SPLIT ================= */
+      .calendar-split {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr; /* kiri lebih besar */
+        gap: 12px;
+        align-items: start;
+    }
+
+    /* ================= KALENDER KIRI ================= */
+    .calendar-left {
+        background: #ffffff;
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+        display: flex;
+        flex-direction: column;
+
+        max-height: 280px;
+        overflow: hidden;
+    }
+
+    /* ================= HEADER ================= */
+    .days-header {
+        flex: none;
+    }
+
+    .days-header div {
+        padding: 5px 0;
+        font-size: 10px;
+    }
+
+    /* ================= GRID ================= */
+    .grid {
+        display: grid;
+        grid-template-rows: repeat(6, minmax(18px, 1fr));
+    }
+
+    .cell {
+        padding: 4px;
+    }
+
+     .calendar-right {
+        display: block;
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 12px 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+        height: fit-content;
+    }
+    
+
+     .calendar-right .agenda-legend {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+
+    .date-box {
+        font-size: 15px;
+        line-height: 1;
+    }
+
+
+    .cell.active .date-container{
+        padding-top: 2px;
+        padding-bottom: 4px;
+    }
+
+    .cell.week-active {
+        min-height: 40px;
+        padding-top: 2px;
+    }
+
+    .cell.week-active .date-container {
+        padding-top: 5px;
+        padding-bottom: 0px;
+    }
+
+    .cell.week-active .date-container .date-box {
+        font-size: 18px;
+        padding: 3px 14px;
+        font-weight: 500;
+    }
+
+    .cell.active .date-box {
+        font-size: 16px;
+        padding: 3px 11px;
+        border-radius: 8px;
+    }
+
+    .cell .date-container {
+        padding-top: 5px;
+    }
+
+    .legend-item {
+        font-size: 12px;
+    }
+
+    .cell.week-active .badge-wrapper {
+        bottom: -8px;
+    }
+
+    /* ================= BADGE ================= */
+    .badge {
+        font-size: 6px;
+        padding: 2px 8px;
+    }
+
+    .badge-wrapper {
+        bottom: -4px;
+    }
+
+    /* ================= KANAN ================= */
+
+    /* ================= AGENDA (KUNCI TERAKHIR) ================= */
+    .agenda-card,
+    .agenda-area,
+    .agenda-wrapper {
+        margin-top: 0 !important;
+        /* ⬅️ PASTI NAIK */
+    }
+
+    
+  .no-agenda-card {
+      min-height: 630px;          /* bikin card memanjang */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;    /* konten tetap di tengah */
+      padding: 32px 20px;
+  }
+
+    /* ⛔ AGENDA JANGAN IKUT MEMBESAR */
+    .agenda-main {
+        height: auto;
+        min-height: unset;
+        display: block;
+    }
+
+    /* ⛔ ISI AGENDA BIAR NATURAL */
+    #agendaContent {
+        display: block;
+        height: auto;
+    }
+
+    .agenda-legend {
+        display: none;
+    }
+
+}
+
+/* scene layer = fullscreen overlay */
+#scene-web,
+#scene-video1 {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* video scene di atas */
+#scene-video1 {
+    z-index: 9999;
+    background: black;
+}
+
+/* hidden = hilang total */
+.scene-hidden {
+    display: none !important;
+}
+
+/* video fit layar */
+#scene-video1 video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#scene-web {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}

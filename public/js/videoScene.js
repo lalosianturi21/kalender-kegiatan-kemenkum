@@ -1,5 +1,5 @@
 const scenes = [
-    { id: "scene-web", duration: 200000 },
+    { id: "scene-web", duration: 15*60000 },
     { id: "scene-video1", isVideo: true },
 ];
 

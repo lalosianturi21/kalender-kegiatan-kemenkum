@@ -55,14 +55,10 @@ class CalendarController extends Controller
 
         // ===== DETEKSI DIVISI =====
         $divisiMap = [
-            'Kantor Wilayah'    => 'divisi-1',
-            'P3H'   => 'divisi-2',
-            'Tim AHU'   => 'divisi-3',
-            'KI'    => 'divisi-4',
-            'SDM'   => 'divisi-5',
-            'KEU'   => 'divisi-6',
-            'Tim TUM' => 'divisi-7',
-            'Tim Pelaporan'   => 'divisi-8',
+            'P3H'   => 'divisi-1',
+            'Tim AHU'   => 'divisi-2',
+            'KI'    => 'divisi-3',
+            'Tim TUM' => 'divisi-4',
         ];
 
         $divisiClass = 'divisi-default';

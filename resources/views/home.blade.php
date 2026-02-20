@@ -37,36 +37,24 @@
 
             <div class="agenda-legend">
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#2196F3;"></div>
-                    <span>Kantor Wilayah</span>
-                </div>
-                <div class="legend-item">
-                    <div class="color-dot" style="background:#4CAF50;"></div>
+                    <div class="color-dot" style="background:#FFEB3B;"></div>
                     <span>Perancang Perundang undangan dan pembinaan hukum</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#FF9800;"></div>
+                    <div class="color-dot" style="background:#06D001;"></div>
                     <span>Bidang pelayanan AHU</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#F44336;"></div>
+                    <div class="color-dot" style="background:#FF5FCF;"></div>
                     <span>Bidang pelayanan KI</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#9C27B0;"></div>
-                    <span>Tim kerja SDM</span>
-                </div>
-                <div class="legend-item">
                     <div class="color-dot" style="background:#00BCD4;"></div>
-                    <span>Tim kerja Keuangan</span>
+                    <span>Bagian Tata Usaha dan Umum</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#FFEB3B;"></div>
-                    <span>Tim Kerja Humas</span>
-                </div>
-                <div class="legend-item">
-                    <div class="color-dot" style="background:#E91E63;"></div>
-                    <span>Tim Kerja Pelaporan</span>
+                    <div class="color-dot" style="background:#9E9E9E;"></div>
+                    <span>Tidak Ada Divisi</span>
                 </div>
             </div>
         </div>
@@ -93,36 +81,24 @@
         <div class="calendar-right">
             <div class="agenda-legend vertical">
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#2196F3;"></div>
-                    <span>Kantor Wilayah</span>
-                </div>
-                <div class="legend-item">
-                    <div class="color-dot" style="background:#4CAF50;"></div>
+                    <div class="color-dot" style="background:#FFEB3B;"></div>
                     <span>Perancang Perundang undangan dan pembinaan hukum</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#FF9800;"></div>
+                    <div class="color-dot" style="background:#06D001;"></div>
                     <span>Bidang pelayanan AHU</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#F44336;"></div>
+                    <div class="color-dot" style="background:#FF5FCF;"></div>
                     <span>Bidang pelayanan KI</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#9C27B0;"></div>
-                    <span>Tim kerja SDM</span>
-                </div>
-                <div class="legend-item">
                     <div class="color-dot" style="background:#00BCD4;"></div>
-                    <span>Tim kerja Keuangan</span>
+                    <span>Bagian Tata Usaha dan Umum</span>
                 </div>
                 <div class="legend-item">
-                    <div class="color-dot" style="background:#FFEB3B;"></div>
-                    <span>Tim Kerja Humas</span>
-                </div>
-                <div class="legend-item">
-                    <div class="color-dot" style="background:#E91E63;"></div>
-                    <span>Tim Kerja Pelaporan</span>
+                    <div class="color-dot" style="background:#9E9E9E;"></div>
+                    <span>Tidak Ada Divisi</span>
                 </div>
             </div>
         </div>

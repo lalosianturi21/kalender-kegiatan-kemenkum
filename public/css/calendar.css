@@ -178,27 +178,27 @@ body {
 }
 
 /* ===== WARNA BAR UNTUK 8 DIVISI ===== */
-.agenda-card.divisi-1 .bar { background: #2196F3; }  /* Biru */
-.agenda-card.divisi-2 .bar { background: #4CAF50; }  /* Hijau */
-.agenda-card.divisi-3 .bar { background: #FF9800; }  /* Orange */
-.agenda-card.divisi-4 .bar { background: #F44336; }  /* Merah */
-.agenda-card.divisi-5 .bar { background: #9C27B0; }  /* Ungu */
-.agenda-card.divisi-6 .bar { background: #00BCD4; }  /* Cyan */
-.agenda-card.divisi-7 .bar { background: #FFEB3B; }  /* Kuning */
-.agenda-card.divisi-8 .bar { background: #E91E63; }  /* Pink */
-.agenda-card.divisi-default .bar { background: #9E9E9E; }  /* Pink */
+/* ===== WARNA BAR (GARIS SAMPING) ===== */
+.agenda-card.divisi-1 .bar { background: #FFEB3B; }   /* Humas */
+.agenda-card.divisi-2 .bar { background: #06D001; }   /* Perancang & Pembinaan Hukum */
+.agenda-card.divisi-3 .bar { background: #FF5FCF; }   /* SDM */
+.agenda-card.divisi-4 .bar { background: #00BCD4; }   /* Keuangan */
+.agenda-card.divisi-default .bar { background: #9E9E9E; }
 
-/* ===== WARNA BACKGROUND UNTUK 8 DIVISI ===== */
-.agenda-card.divisi-1 { background: #E3F2FD; }  /* Biru muda */
-.agenda-card.divisi-2 { background: #E8F5E9; }  /* Hijau muda */
-.agenda-card.divisi-3 { background: #FFF3E0; }  /* Orange muda */
-.agenda-card.divisi-4 { background: #FFEBEE; }  /* Merah muda */
-.agenda-card.divisi-5 { background: #F3E5F5; }  /* Ungu muda */
-.agenda-card.divisi-6 { background: #E0F7FA; }  /* Cyan muda */
-.agenda-card.divisi-7 { background: #FFFDE7; }  /* Kuning muda */
-.agenda-card.divisi-8 { background: #FCE4EC; }  /* Pink muda */
-.agenda-card.divisi-default { background: #F5F5F5; }  /* Pink muda */
+/* ===== BACKGROUND CARD (VERSI MUDA) ===== */
+.agenda-card.divisi-1 { background: #FFFDE7; }
+.agenda-card.divisi-2 { background: #E8FBEA; }
+.agenda-card.divisi-3 { background: #FFE6F7; }
+.agenda-card.divisi-4 { background: #E0F7FA; }
+.agenda-card.divisi-default { background: #F5F5F5; }
 
+.server-slow {
+    grid-column: span 7;
+    text-align: center;
+    padding: 30px;
+    font-weight: 600;
+    color: #555;
+}
 
 .agenda-details h3 {
     margin: 0 0 10px 0;
@@ -575,17 +575,27 @@ body {
 /* ====== TABLET PORTRAIT (660–770 x 1066) ====== */
 @media (max-width: 770px) {
 
-     .main {
-      min-height: unset;
-      height: auto;
-      align-content: start;
-      gap: 12px;
+    .main {
+        min-height: unset;
+        height: auto;
+        align-content: start;
+        gap: 12px;
     }
 
+    /* ================= SPLIT ================= */
+    .calendar-split {
+        display: grid;
+        grid-template-columns: 2.2fr 1fr;
+        gap: 12px;
+        align-items: stretch; /* ✅ sejajarkan tinggi kiri-kanan */
+    }
+
+    /* ================= AGENDA WRAPPER ================= */
     .agenda-wrapper {
-          max-height: calc((150px * 4) + (16px * 3));
+        max-height: calc((150px * 4) + (16px * 3));
     }
 
+    /* ================= AREA ================= */
     .calendar-area {
         padding: 14px;
         height: auto;
@@ -594,15 +604,6 @@ body {
         flex-direction: column;
         gap: 12px;
         background: transparent;
-        /* ⬅️ jarak terkendali */
-    }
-
-    /* ================= SPLIT ================= */
-      .calendar-split {
-        display: grid;
-        grid-template-columns: 2.2fr 1fr; /* kiri lebih besar */
-        gap: 12px;
-        align-items: start;
     }
 
     /* ================= KALENDER KIRI ================= */
@@ -614,7 +615,7 @@ body {
         display: flex;
         flex-direction: column;
 
-        max-height: 280px;
+        height: 100%;          /* ✅ ikut tinggi grid */
         overflow: hidden;
     }
 
@@ -638,31 +639,33 @@ body {
         padding: 4px;
     }
 
-     .calendar-right {
-        display: block;
+    /* ================= KALENDER KANAN ================= */
+    .calendar-right {
+        display: flex;              /* ✅ penting */
+        flex-direction: column;
+        justify-content: center;    /* opsional biar isi center */
+
         background: #ffffff;
         border-radius: 14px;
         padding: 12px 14px;
         box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
-        height: fit-content;
+        height: 100%;               /* ✅ sejajar kiri */
     }
-    
 
-     .calendar-right .agenda-legend {
+    .calendar-right .agenda-legend {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 18px;
     }
 
-
+    /* ================= DATE STYLE ================= */
     .date-box {
         font-size: 15px;
         line-height: 1;
     }
 
-
-    .cell.active .date-container{
+    .cell.active .date-container {
         padding-top: 2px;
         padding-bottom: 4px;
     }
@@ -693,12 +696,9 @@ body {
         padding-top: 5px;
     }
 
+    /* ================= LEGEND ================= */
     .legend-item {
-        font-size: 12px;
-    }
-
-    .cell.week-active .badge-wrapper {
-        bottom: -8px;
+        font-size: 14px;
     }
 
     /* ================= BADGE ================= */
@@ -711,33 +711,23 @@ body {
         bottom: -4px;
     }
 
-    /* ================= KANAN ================= */
+    .cell.week-active .badge-wrapper {
+        bottom: -8px;
+    }
 
-    /* ================= AGENDA (KUNCI TERAKHIR) ================= */
+    /* ================= AGENDA ================= */
     .agenda-card,
     .agenda-area,
     .agenda-wrapper {
         margin-top: 0 !important;
-        /* ⬅️ PASTI NAIK */
     }
 
-    
-  .no-agenda-card {
-      min-height: 630px;          /* bikin card memanjang */
-      display: flex;
-      flex-direction: column;
-      justify-content: center;    /* konten tetap di tengah */
-      padding: 32px 20px;
-  }
-
-    /* ⛔ AGENDA JANGAN IKUT MEMBESAR */
     .agenda-main {
         height: auto;
         min-height: unset;
         display: block;
     }
 
-    /* ⛔ ISI AGENDA BIAR NATURAL */
     #agendaContent {
         display: block;
         height: auto;
@@ -745,8 +735,17 @@ body {
 
     .agenda-legend {
         display: none;
+        margin-top: 0;
     }
 
+    /* ================= NO AGENDA ================= */
+    .no-agenda-card {
+        min-height: 630px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 32px 20px;
+    }
 }
 
 /* scene layer = fullscreen overlay */
@@ -773,7 +772,6 @@ body {
 #scene-video1 video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
 }
 
 #scene-web {

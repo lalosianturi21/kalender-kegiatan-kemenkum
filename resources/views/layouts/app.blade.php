@@ -32,6 +32,44 @@
 
     <script src="{{ asset('js/calendar.js') }}"></script>
     <script src="{{ asset('js/videoScene.js') }}"></script>
+    <script>
+    const logoArea = document.querySelector('.logo-area');
+
+    logoArea.addEventListener('click', () => {
+        const docElm = document.documentElement;
+
+        // JIKA SUDAH FULLSCREEN → KELUAR
+        if (
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement
+        ) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+
+        // JIKA BELUM → MASUK FULLSCREEN
+        } else {
+            if (docElm.requestFullscreen) {
+                docElm.requestFullscreen();
+            } else if (docElm.webkitRequestFullscreen) {
+                docElm.webkitRequestFullscreen();
+            } else if (docElm.mozRequestFullScreen) {
+                docElm.mozRequestFullScreen();
+            } else if (docElm.msRequestFullscreen) {
+                docElm.msRequestFullscreen();
+            }
+        }
+    });
+</script>
+
 
 </body>
 </html>

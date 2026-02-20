@@ -11,6 +11,7 @@ const monthNames = [
     "Juli", "Agustus", "September", "Oktober", "November", "Desember"
 ];
 
+
 // ===============================
 // FORMAT DATE
 // ===============================
@@ -28,23 +29,69 @@ function fetchMonthData(dateObj) {
     const year = dateObj.getFullYear();
     const key = `${month}-${year}`;
 
-    // 🔥 kalau sudah ada di cache, pakai itu
+    // 🔥 pakai cache kalau ada
     if (monthCache[key]) {
         calendarEvents = monthCache[key];
         renderCalendar();
         return;
     }
 
-    fetch(`/calendar/import?bulan=${key}`)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+
+        // tampilkan pesan loading lambat
+        const grid = document.getElementById("calendarGrid");
+        if (grid) {
+            grid.innerHTML = `
+                <div class="server-slow">
+                    Server sedang lambat, mohon menunggu...
+                </div>
+            `;
+        }
+
+        // 🔁 coba load ulang otomatis
+        setTimeout(() => {
+            fetchMonthData(dateObj);
+        }, 2000);
+
+    }, 30000); // ⏱️ 30 detik
+
+    fetch(`/calendar/import?bulan=${key}`, {
+        signal: controller.signal
+    })
         .then(res => res.json())
         .then(data => {
-            monthCache[key] = data; // simpan cache
+            clearTimeout(timeoutId);
+            monthCache[key] = data;
             calendarEvents = data;
             renderCalendar();
         })
-        .catch(err => console.error('Fetch month error:', err));
-}
+        .catch(err => {
+            clearTimeout(timeoutId);
 
+            if (err.name === "AbortError") {
+                console.warn("Fetch dibatalkan karena timeout");
+                return;
+            }
+
+            console.error("Fetch error:", err);
+
+            const grid = document.getElementById("calendarGrid");
+            if (grid) {
+                grid.innerHTML = `
+                    <div class="server-slow">
+                        Gagal memuat data. Mencoba ulang...
+                    </div>
+                `;
+            }
+
+            // 🔁 retry
+            setTimeout(() => {
+                fetchMonthData(dateObj);
+            }, 3000);
+        });
+}
 // ===============================
 // TIMER AUTO RESET (20 DETIK)
 // ===============================
@@ -153,11 +200,47 @@ function showAgendaWithReset(day, monthName, year, el) {
     startResetTimer();
 }
 
+// ===============================
+// AUTO SCROLL AGENDA WRAPPER
+// ===============================
+let autoScrollInterval = null;
+
+function startAutoScroll() {
+    const wrapper = document.querySelector(".agenda-wrapper");
+    if (!wrapper) return;
+
+    if (autoScrollInterval) clearInterval(autoScrollInterval);
+
+    let direction = 1; // 1 = turun, -1 = naik
+
+    autoScrollInterval = setInterval(() => {
+
+        const maxScroll = wrapper.scrollHeight - wrapper.clientHeight;
+
+        if (maxScroll <= 0) return; // tidak perlu scroll kalau konten pendek
+
+        wrapper.scrollTop += direction;
+
+        // kalau sudah mentok bawah → balik arah
+        if (wrapper.scrollTop + wrapper.clientHeight >= wrapper.scrollHeight - 1) {
+            direction = -1;
+        }
+
+        if (wrapper.scrollTop <= 0) {
+            direction = 1;
+        }
+
+
+            }, 50); // makin kecil makin cepat
+        }
+
+
 function showAgenda(day, monthName, year, el) {
 
     document.querySelectorAll(".cell").forEach(c =>
         c.classList.remove("active")
     );
+    
     el.classList.add("active");
 
     document.getElementById("agendaTitle").innerText =
@@ -231,6 +314,9 @@ function showAgenda(day, monthName, year, el) {
             </div>
         `;
     });
+
+    startAutoScroll();
+
 }
 
 // ===============================

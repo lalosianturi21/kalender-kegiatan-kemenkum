@@ -1,5 +1,5 @@
 const scenes = [
-    { id: "scene-web", duration: 200000 }, // kalender 20 detik
+    { id: "scene-web", duration: 15*60000 },
     { id: "scene-video1", isVideo: true },
 ];
 
@@ -10,20 +10,34 @@ let idleTimer = null;
 const video = document.getElementById("videoPlayer");
 
 // =======================
-// DETEKSI INTERAKSI USER
+// DETEKSI KLIK SAJA
 // =======================
+function handleClick() {
+    // jika sedang di scene video → balik ke kalender
+    if (scenes[sceneIndex].isVideo) {
+    video.pause();
+    video.currentTime = 0;
+    sceneIndex = 0;
+    videoIndex = 0; // ← tambahkan ini
+    showScene(sceneIndex);
+    return;
+}
+
+
+    // jika di scene web → reset timer
+    resetIdleTimer();
+}
+
+window.addEventListener("click", handleClick, true);
+
+// =======================
+
 function resetIdleTimer() {
     if (!scenes[sceneIndex].isVideo) {
         if (idleTimer) clearTimeout(idleTimer);
         idleTimer = setTimeout(nextScene, scenes[sceneIndex].duration);
     }
 }
-
-["click","mousemove","keydown","touchstart","scroll"].forEach(evt => {
-    window.addEventListener(evt, resetIdleTimer, true);
-});
-
-// =======================
 
 function showScene(index) {
     document.getElementById("scene-web").classList.add("scene-hidden");
@@ -37,7 +51,7 @@ function showScene(index) {
     if (scene.isVideo) {
         playVideo();
     } else {
-        resetIdleTimer(); // timer hanya aktif jika tidak ada interaksi
+        resetIdleTimer();
     }
 }
 

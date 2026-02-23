@@ -32,5 +32,6 @@ return [
     ],
 
     'agenda_url' => env('AGENDA_API_URL'),
+    'scene_web_duration_minutes' => env('DURATION'),
 
 ];

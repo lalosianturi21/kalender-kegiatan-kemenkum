@@ -1,5 +1,5 @@
 const scenes = [
-    { id: "scene-web", duration: 15*60000 },
+    { id: "scene-web", duration: sceneWebDuration },
     { id: "scene-video1", isVideo: true },
 ];
 
@@ -9,37 +9,45 @@ let idleTimer = null;
 
 const video = document.getElementById("videoPlayer");
 
+
 // =======================
-// DETEKSI KLIK SAJA
+// DETEKSI KLIK
 // =======================
 function handleClick() {
-    // jika sedang di scene video → balik ke kalender
+
+    // ✅ hanya bereaksi kalau sedang di video
     if (scenes[sceneIndex].isVideo) {
-    video.pause();
-    video.currentTime = 0;
-    sceneIndex = 0;
-    videoIndex = 0; // ← tambahkan ini
-    showScene(sceneIndex);
-    return;
-}
+        video.pause();
+        video.currentTime = 0;
+        sceneIndex = 0;
+        videoIndex = 0;
+        showScene(sceneIndex);
+    }
 
-
-    // jika di scene web → reset timer
-    resetIdleTimer();
+    // ❌ TIDAK ADA resetIdleTimer di sini
 }
 
 window.addEventListener("click", handleClick, true);
 
-// =======================
 
-function resetIdleTimer() {
-    if (!scenes[sceneIndex].isVideo) {
-        if (idleTimer) clearTimeout(idleTimer);
-        idleTimer = setTimeout(nextScene, scenes[sceneIndex].duration);
+// =======================
+// TIMER IDLE → PINDAH VIDEO
+// =======================
+function startIdleTimer() {
+    if (idleTimer) clearTimeout(idleTimer);
+
+    const duration = scenes[sceneIndex].duration;
+    if (duration) {
+        idleTimer = setTimeout(nextScene, duration);
     }
 }
 
+
+// =======================
+// SHOW SCENE
+// =======================
 function showScene(index) {
+
     document.getElementById("scene-web").classList.add("scene-hidden");
     document.getElementById("scene-video1").classList.add("scene-hidden");
 
@@ -51,10 +59,15 @@ function showScene(index) {
     if (scene.isVideo) {
         playVideo();
     } else {
-        resetIdleTimer();
+        // ✅ timer mulai hanya saat masuk scene-web
+        startIdleTimer();
     }
 }
 
+
+// =======================
+// PLAY VIDEO
+// =======================
 function playVideo() {
     if (!videoList || videoList.length === 0) {
         nextScene();
@@ -68,6 +81,7 @@ function playVideo() {
 
     video.onended = () => {
         videoIndex++;
+
         if (videoIndex >= videoList.length) {
             videoIndex = 0;
             nextScene();
@@ -77,11 +91,18 @@ function playVideo() {
     };
 }
 
+
+// =======================
+// NEXT SCENE
+// =======================
 function nextScene() {
     if (idleTimer) clearTimeout(idleTimer);
     sceneIndex = (sceneIndex + 1) % scenes.length;
     showScene(sceneIndex);
 }
 
-// mulai
+
+// =======================
+// START
+// =======================
 showScene(0);

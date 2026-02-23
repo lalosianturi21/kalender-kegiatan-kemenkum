@@ -94,12 +94,13 @@ class CalendarController extends Controller
 
     public function index()
     {
+        $sceneDurationMinutes = config('services.scene_web_duration_minutes');
         $videos = collect(File::files(public_path('videos')))
             ->filter(fn ($file) => in_array($file->getExtension(), ['mp4', 'webm', 'ogg']))
             ->map(fn ($file) => asset('videos/' . $file->getFilename()))
             ->values();
 
-        return view('home', compact('videos'));
+        return view('home', compact('videos', 'sceneDurationMinutes'));
     }
 
 }

@@ -28,6 +28,8 @@
 
     <script>
         const videoList = @json($videos);
+        const sceneWebDuration = @json($sceneDurationMinutes) * 60000;
+        console.log("Durasi Scene Web (ms):", sceneWebDuration);
     </script>
 
     <script src="{{ asset('js/calendar.js') }}"></script>

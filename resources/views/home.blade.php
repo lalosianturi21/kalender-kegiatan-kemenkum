@@ -54,7 +54,7 @@
                 </div>
                 <div class="legend-item">
                     <div class="color-dot" style="background:#9E9E9E;"></div>
-                    <span>Tidak Ada Divisi</span>
+                    <span>Tidak ada Divisi</span>
                 </div>
             </div>
         </div>
@@ -98,7 +98,7 @@
                 </div>
                 <div class="legend-item">
                     <div class="color-dot" style="background:#9E9E9E;"></div>
-                    <span>Tidak Ada Divisi</span>
+                    <span>Tidak ada Divisi</span>
                 </div>
             </div>
         </div>

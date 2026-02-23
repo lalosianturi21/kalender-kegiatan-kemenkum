@@ -11,78 +11,85 @@ use Illuminate\Support\Facades\File;
 class CalendarController extends Controller
 {
     public function import(Request $request)
-{
-    // Format bulan: MM-YYYY
-    $bulan = $request->bulan
-        ? Carbon::createFromFormat('m-Y', $request->bulan)->format('m-Y')
-        : now()->format('m-Y');
+    {
+        // Format bulan: MM-YYYY
+        $sceneDurationMinutes = config('services.scene_web_duration_minutes');
+        $bulan = $request->bulan
+            ? Carbon::createFromFormat('m-Y', $request->bulan)->format('m-Y')
+            : now()->format('m-Y');
 
-    // Kita kirim tanggal awal bulan ke API (karena API butuh DD-MM-YYYY)
-    $tanggalApi = Carbon::createFromFormat('m-Y', $bulan)
-                    ->startOfMonth()
-                    ->format('d-m-Y');
+        // Kita kirim tanggal awal bulan ke API (karena API butuh DD-MM-YYYY)
+        $tanggalApi = Carbon::createFromFormat('m-Y', $bulan)
+                        ->startOfMonth()
+                        ->format('d-m-Y');
 
-    $apiUrl = config('services.agenda_url') . $tanggalApi;
+        $apiUrl = config('services.agenda_url') . $tanggalApi;
 
-    $response = Http::get($apiUrl);
+        $response = Http::get($apiUrl);
 
-    if (!$response->successful()) {
-        return response()->json([
-            'error' => 'Gagal mengambil data agenda dari API'
-        ], 500);
-    }
-
-    $data = $response->json();
-    $events = [];
-
-    foreach ($data as $event) {
-
-        if (!isset($event['start'])) {
-            continue;
+        if (!$response->successful()) {
+            return response()->json([
+                'error' => 'Gagal mengambil data agenda dari API'
+            ], 500);
         }
 
-        // ===== KONVERSI WAKTU =====
-        $start = Carbon::createFromTimestampUTC($event['start'])
-                    ->setTimezone('Asia/Jakarta');
+        $data = $response->json();
+        $events = [];
 
-        $end = isset($event['end']) && $event['end'] != 0
-            ? Carbon::createFromTimestampUTC($event['end'])->setTimezone('Asia/Jakarta')
-            : $start->copy();
+        foreach ($data as $event) {
 
-        $summary = $event['agenda'] ?? '';
-        $picRaw = $event['pic'] ?? '';
-        $pic = is_array($picRaw) ? ($picRaw[0] ?? '') : $picRaw;
-
-        // ===== DETEKSI DIVISI =====
-        $divisiMap = [
-            'P3H'   => 'divisi-1',
-            'Tim AHU'   => 'divisi-2',
-            'KI'    => 'divisi-3',
-            'Tim TUM' => 'divisi-4',
-        ];
-
-        $divisiClass = 'divisi-default';
-
-        foreach ($divisiMap as $key => $class) {
-            if (stripos($pic, $key) !== false) {
-                $divisiClass = $class;
-                break;
+            if (!isset($event['start'])) {
+                continue;
             }
+
+            // ===== KONVERSI WAKTU =====
+            $start = Carbon::createFromTimestampUTC($event['start'])
+                        ->setTimezone('Asia/Jakarta');
+
+            $end = isset($event['end']) && $event['end'] != 0
+                ? Carbon::createFromTimestampUTC($event['end'])->setTimezone('Asia/Jakarta')
+                : $start->copy();
+
+            $summary = $event['agenda'] ?? '';
+            $picRaw = $event['pic'] ?? '';
+            $pic = is_array($picRaw) ? ($picRaw[0] ?? '') : $picRaw;
+
+            // ===== DETEKSI DIVISI =====
+            $divisiMap = [
+                'Tim P3H'   => 'divisi-1',
+                'Tim AHU'   => 'divisi-2',
+                'Tim KI'    => 'divisi-3',
+                'Tim TUM'        => 'divisi-4',
+                'Tim Pelaporan'  => 'divisi-4',
+                'Tim SDM'        => 'divisi-4',
+                'Tim Keuangan'   => 'divisi-4',
+                'Tim BSK'        => 'divisi-1',
+                'Tim Yankum'      => 'divisi-3',
+                'Tim Pelayanan Hukum' => 'divisi-3',
+            ];
+
+            $divisiClass = 'divisi-default';
+
+            foreach ($divisiMap as $key => $class) {
+                if (stripos($pic, $key) !== false) {
+                    $divisiClass = $class;
+                    break;
+                }
+            }
+
+            $events[] = [
+                'uid'         => $event['id'],
+                'summary'     => $summary,
+                'description' => $event['description'] ?? null,
+                'start'       => $start->format('Y-m-d H:i:s'),
+                'end'         => $end->format('Y-m-d H:i:s'),
+                'location'    => $event['location'] ?? null,
+                'divisiClass' => $divisiClass,
+            ];
         }
 
-        $events[] = [
-            'uid'         => $event['id'],
-            'summary'     => $summary,
-            'description' => $event['description'] ?? null,
-            'start'       => $start->format('Y-m-d H:i:s'),
-            'end'         => $end->format('Y-m-d H:i:s'),
-            'location'    => $event['location'] ?? null,
-            'divisiClass' => $divisiClass,
-        ];
+        return response()->json($events);
     }
-
-    return response()->json($events);
-}
 
 
     public function index()

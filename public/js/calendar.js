@@ -301,9 +301,14 @@ function showAgenda(day, monthName, year, el) {
                     <h3>${item.summary}</h3>
                     <div class="agenda-info">
                         <i class="fa-regular fa-clock"></i>
-                        <span>
+                       <span>
                             ${item.start.substring(11,16)}
-                            ${item.end ? ' - ' + item.end.substring(11,16) : ''}
+                            ${
+                                !item.end || 
+                                item.end === item.start
+                                    ? ' - Selesai'
+                                    : ' - ' + item.end.substring(11,16)
+                            }
                         </span>
                     </div>
                     <div class="agenda-info">
@@ -346,3 +351,15 @@ function goToday() {
 // LOAD PERTAMA
 // ===============================
 fetchMonthData(currentDate);
+
+setInterval(() => {
+
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const year = currentDate.getFullYear();
+    const key = `${month}-${year}`;
+
+    delete monthCache[key]; // paksa ambil dari server
+
+    fetchMonthData(currentDate);
+
+},  60000); // 5 menit

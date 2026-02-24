@@ -63,6 +63,7 @@ class CalendarController extends Controller
                 'Tim Pelaporan'  => 'divisi-4',
                 'Tim SDM'        => 'divisi-4',
                 'Tim Keuangan'   => 'divisi-4',
+                'Tim Humas'        => 'divisi-4',
                 'Tim BSK'        => 'divisi-1',
                 'Tim Yankum'      => 'divisi-3',
                 'Tim Pelayanan Hukum' => 'divisi-3',

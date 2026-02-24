@@ -362,4 +362,4 @@ setInterval(() => {
 
     fetchMonthData(currentDate);
 
-},  60000); // 5 menit
+},  60000); // 1 menit
